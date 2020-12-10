@@ -65,31 +65,31 @@ paths:
       operationId: auth-oauth
       parameters:
         - name: grant_type
-          in: form
+          in: query
           description: The type of grant for authentication
           required: true
           example: authorization_code
           schema:
             type: string
         - name: code
-          in: form
+          in: query
           description: >-
             The `code` retrieved from your Redirect URL when Freshbooks is
             granted access
           schema:
             type: string
         - name: client_id
-          in: form
+          in: query
           description: Client ID from your App on Frshbooks
           schema:
             type: string
         - name: client_secret
-          in: form
+          in: query
           description: Client secret from  your App on Freshbooks
           schema:
             type: string
         - name: redirect_uri
-          in: form
+          in: query
           description: The Redirect URL specified  while creating your App on Freshbooks
           schema:
             type: string
@@ -134,30 +134,30 @@ paths:
       operationId: auth-oauth
       parameters:
         - name: grant_type
-          in: form
+          in: query
           description: The type of grant for authentication
           required: true
           schema:
             type: string
         - name: refresh_token
-          in: form
+          in: query
           description: >-
             The `code` retrieved from your Redirect URL when Freshbooks is
             granted access
           schema:
             type: string
         - name: client_id
-          in: form
+          in: query
           description: Client ID from your App on Frshbooks
           schema:
             type: string
         - name: client_secret
-          in: form
+          in: query
           description: Client secret from  your App on Freshbooks
           schema:
             type: string
         - name: redirect_uri
-          in: form
+          in: query
           description: The Redirect URL specified  while creating your App on Freshbooks
           schema:
             type: string
@@ -332,7 +332,7 @@ components:
           example: a0c7f49954210781d5d41d4c90b327fdcb91a744d0067c3c4e48c0e57a913dd2
         updated_at:
           description: Date Webhook was created
-          type: date
+          type: string
     result:
       type: object
       properties:

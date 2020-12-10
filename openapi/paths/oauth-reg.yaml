@@ -4,7 +4,7 @@ post:
   summary: To regenerate bearer token using refresh token
   description: |
     To regenerate tokens to access Freshbooks resources tied to the Client ID and the Client Secret combination.
-  operationId: auth-oauth
+  operationId: auth-oauth-reg
   parameters:
     - name: grant_type
       in: query
@@ -35,7 +35,7 @@ post:
   security:
     - bearerAuth: []
   responses:
-    "200":
+    '200':
       description: Bearer Token Generated Successfully
       content:
         application/json:
@@ -46,9 +46,9 @@ post:
             token_type: Bearer
             expires_in: 43199
             refresh_token: 516b69ca15bdeb80ad72e81e94720d52cf7ca35053416b8525ce06720b3d4bf8
-            scope: "admin:all:legacy"
+            scope: 'admin:all:legacy'
             created_at: 1607559356
-    "401":
+    '401':
       description: User not Authorised
       content:
         application/json:

@@ -18,4 +18,4 @@ properties:
     example: a0c7f49954210781d5d41d4c90b327fdcb91a744d0067c3c4e48c0e57a913dd2
   updated_at:
     description: Date Webhook was created
-    type: date
+    type: string
