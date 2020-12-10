@@ -1,0 +1,21 @@
+type: object
+properties:
+  callbackid:
+    description: Unique Idenitfier for Webhook created
+    type: string
+    example: 784451
+  verified:
+    description: Expected Authentication Method
+    type: boolean
+    example: Bearer
+  uri:
+    description: Webhook URI
+    type: string
+    example: https://webhook.site/3205a9f8-6a91-4d09-87fe-8aedeafcc2a13200
+  event:
+    description: Event alloted to the Webhook URL
+    type: string
+    example: a0c7f49954210781d5d41d4c90b327fdcb91a744d0067c3c4e48c0e57a913dd2
+  updated_at:
+    description: Date Webhook was created
+    type: date

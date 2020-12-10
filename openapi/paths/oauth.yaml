@@ -1,0 +1,64 @@
+post:
+  tags:
+    - Get Bearer Token
+  summary: Get bearer token
+  description: |
+    To generate tokens to access Freshbooks Resources tied to the Client ID and the Client Secret combination.
+
+    A sample implementation in NodeJs and [code](https://github.com/jimioniay/fb-auth-nodejs) 
+
+    ![picture](https://res.cloudinary.com/seamless-africa-fintech/image/upload/v1607586682/ezgif-4-6d97de8dc10c_gxvnrp.gif)
+  operationId: auth-oauth
+  parameters:
+    - name: grant_type
+      in: form
+      description: The type of grant for authentication
+      required: true
+      example: authorization_code
+      schema:
+        type: string
+    - name: code
+      in: form
+      description: The `code` retrieved from your Redirect URL when Freshbooks is granted access
+      schema:
+        type: string
+    - name: client_id
+      in: form
+      description: Client ID from your App on Frshbooks
+      schema:
+        type: string
+    - name: client_secret
+      in: form
+      description: Client secret from  your App on Freshbooks
+      schema:
+        type: string
+    - name: redirect_uri
+      in: form
+      description: The Redirect URL specified  while creating your App on Freshbooks
+      schema:
+        type: string
+  security:
+    - bearerAuth: []
+  responses:
+    "200":
+      description: Bearer Token Generated Successfully
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/auth/OauthSuccessResponse.yaml
+          example:
+            access_token: 86670f5dbb579b478c26a67e8ad035600c7365444c884ad493e60c4112fb1a7f
+            token_type: Bearer
+            expires_in: 43199
+            refresh_token: 516b69ca15bdeb80ad72e81e94720d52cf7ca35053416b8525ce06720b3d4bf8
+            scope: "admin:all:legacy"
+            created_at: 1607559356
+    "401":
+      description: User not Authorised
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/auth/OauthFailedResponse.yaml
+          example:
+            error: invalid_grant
+            error_description: The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client.

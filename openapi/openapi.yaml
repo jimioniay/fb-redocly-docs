@@ -1,84 +1,46 @@
 openapi: 3.0.2
 info:
-  version: 1.0.0
-  title: Example.com
-  termsOfService: 'https://example.com/terms/'
+  version: 3.0.0
+  title: Freshbooks Documentation
   contact:
-    email: contact@example.com
-    url: 'http://example.com/contact'
-  license:
-    name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+    email: contact@freshbooks.com
+    url: "https://support.freshbooks.com/hc/en-us"
   x-logo:
-    url: 'https://redocly.github.io/openapi-template/logo.png'
+    url: "https://www.freshbooks.com/wp-content/themes/freshbooks/dist/images/navigation/freshbooks-logo_e1149d13.svg"
   description: >
-    This is an **example** API to demonstrate features of OpenAPI specification
+    # Home
 
-    # Introduction
+    Welcome to the Freshbooks Documentation where we have exposed our Restful APIs as a product. In this documentation you'll see how seamless it is to use Freshbooks APIs to solve complex problems in your day to day business.
 
-    This API definition is intended to to be a good starting point for
-    describing your API in 
+    # Authentication
 
-    [OpenAPI/Swagger
-    format](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md).
+    We at Freshbooks use to the OAuth 2.0 to authenticate requests to any resource on the Freshbooks API. We also made this super seamless. I'll be showing you how to do this with 4 simple steps. Nothing more.
 
-    It also demonstrates features of
-    [create-openapi-repo](https://github.com/Redocly/create-openapi-repo) tool
-    and 
+    1. You create an application user/account [here](https://my.freshbooks.com/#/developer). Look at this account as a super account in the Freshbooks System. It would be responsible for accessing all your resources in the Freshbooks ecosystem tied to that very account. We have awesome blogpost [here](https://www.freshbooks.com/api/authenticating-with-oauth-2-0-on-the-new-freshbooks-api) showing how to create an Application.
+    ![image](https://res.cloudinary.com/seamless-africa-fintech/image/upload/v1607582957/FB_Auth_Flow_1_cukfy6.jpg)
 
-    [Redoc](https://github.com/Redocly/Redoc) documentation engine. So beyond
-    the standard OpenAPI syntax we use a few 
-
-    [vendor
-    extensions](https://github.com/Redocly/Redoc/blob/master/docs/redoc-vendor-extensions.md).
+    2. Now render the Authorization URL from step 1. Once the application grants Fresbooks access, we will redirect you to the Redirect URIs specified when the application was created passing a `code` as query parameters to the redirect URL. So make sure to listen on your redirect url for a query parameter called `code`. You will need it
 
 
-    # OpenAPI Specification
+    3. Now use the `code` from step 2 on as code on `/auth/oauth/token`. See full API specification [here](https://www.freshbooks.com/api/authentication). Freshbooks will then return a pair of access_token and refresh_token. They are called tokens
 
-    The goal of The OpenAPI Specification is to define a standard,
-    language-agnostic interface to REST APIs which
+    4. Subsequent request on the Fresh Books APIs can be authenticated using the token by passing it in the Authorization header as `Bearer <token>`
 
-    allows both humans and computers to discover and understand the capabilities
-    of the service without access to source
-
-    code, documentation, or through network traffic inspection. When properly
-    defined via OpenAPI, a consumer can 
-
-    understand and interact with the remote service with a minimal amount of
-    implementation logic. Similar to what
-
-    interfaces have done for lower-level programming, OpenAPI removes the
-    guesswork in calling the service.
-externalDocs:
-  description: Find out how to create a GitHub repo for your OpenAPI definition.
-  url: 'https://github.com/Rebilly/generator-openapi-repo'
-tags:
-  - name: Echo
-    description: Example echo operations
-  - name: User
-    description: Operations about user
+# tags:
+# - name: Authorization & Authe
+#   description: Get Authorization
 servers:
-  - url: 'http://example.com/api/v1'
-  - url: 'https://example.com/api/v1'
+  - url: "https://api.freshbooks.com"
 paths:
-  '/users/{username}':
-    $ref: 'paths/users@{username}.yaml'
-  /echo:
-    $ref: paths/echo.yaml
+  /auth/oauth:
+    $ref: "paths/oauth.yaml"
+  /auth/oauth/token:
+    $ref: "paths/oauth-reg.yaml"
+  /events/account/@{accountid}/events/callbacks":
+    $ref: "paths/create-webhook.yaml"
 components:
   securitySchemes:
-    main_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: 'http://example.com/api/oauth/dialog'
-          scopes:
-            'read:users': read users info
-            'write:users': modify or remove users
-    api_key:
-      type: apiKey
-      in: header
-      name: api_key
-    basic_auth:
+    bearerAuth:
       type: http
-      scheme: basic
+      scheme: bearer
+      bearerFormat: Bearer <access_token>

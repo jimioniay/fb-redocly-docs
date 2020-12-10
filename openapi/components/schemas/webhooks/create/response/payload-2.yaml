@@ -1,0 +1,6 @@
+type: object
+properties:
+  response:
+    description: Result Object
+    type: object
+    $ref: ./result.yaml

@@ -1,0 +1,26 @@
+type: object
+properties:
+  access_token:
+    description: Access Bearer Token
+    type: string
+    example: 203afbd6ea52c143d0ada7d6b45cc3afeecd740fd621abf1669c5684391b1fc5
+  token_type:
+    description: Expected Authentication Method
+    type: string
+    example: Bearer
+  expires_in:
+    description: Expirty time in seconds
+    type: int
+    example: 43200
+  refresh_token:
+    description: Refresh Bearer Token
+    type: string
+    example: a0c7f49954210781d5d41d4c90b327fdcb91a744d0067c3c4e48c0e57a913dd2
+  scope:
+    description: Scope of permission of access granted
+    type: string
+    example: admin:all:legacy
+  created_at:
+    description: Time stamp
+    type: int
+    example: 1607289604

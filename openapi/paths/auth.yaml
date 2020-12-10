@@ -1,0 +1,30 @@
+post:
+  tags:
+    - Authentication - Oauth
+  summary: Generate Bearer Token
+  description: To generate tokens to access Freshbooks Resources tied to the Client ID and the Client Secret combination
+  operationId: auth-ouath
+  security:
+    - bearerAuth: []
+  consumes:
+    - application/json
+  produces:
+    - application/json
+  responses:
+    "200":
+      $ref: "../components/schemas/auth/OauthSuccessResponse.yaml"
+      description: "Bearer Token Generated Successfully"
+    "401":
+      $ref: "../components/schemas/auth/OauthFailedResponse.yaml"
+      description: "Bearer Token Generated Successfully"
+  parameters:
+    - in: body
+      name: body
+      description: Pet object that needs to be added to the store
+      required: true
+      schema:
+        $ref: ../components/schemas/auth/OauthSuccessResponse.yaml
+  x-codeSamples:
+    - lang: NodeJs
+      source:
+        $ref: ../code_samples/NodeJs/auth/oauth.js

@@ -1,0 +1,8 @@
+type: object
+properties:
+  event:
+    description: Event
+    type: string
+  uri:
+    description: webhook URI
+    type: string

@@ -1,0 +1,5 @@
+type: object
+properties:
+  callback:
+    type: object
+    $ref: ./callback.yaml

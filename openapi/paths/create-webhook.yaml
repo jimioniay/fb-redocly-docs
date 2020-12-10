@@ -1,0 +1,39 @@
+post:
+  tags:
+    - Create Webhook
+  summary: Create Webhook
+  description: |
+    A webhook URL is a fully formed URL in your system where Freshbooks sends events eg An item was edited or an invoice created and a projected was edited etc
+    Freshbooks events are nouns and verbs. Eg For event `invoice.create`, invoice is the noun and create the verb or action on the noun. You can also subscribe to the noun (eg order) event so you can receieve all events (create, update etc) on the event
+
+    # Webhook Use Case
+    An typical case would be an invoice or a project is updated, you get notified. In the example below, I subscribed to invoice event with a glitch servce https://webhook.site/3205a9f8-6a91-4d09-87fe-8aedeafcc2a1 as my webhook server. For everytime an action (via the Dashboard or API) is performed on an invoice I am notified on my webhook
+    I'll use the dashboard for simplicity
+
+    ![image](https://res.cloudinary.com/seamless-africa-fintech/image/upload/v1607585776/ezgif-4-50f656e7d3e0_zzjo6g.gif)
+  operationId: create-webhook
+  parameters:
+    - name: grant_type
+      in: body
+      description: Body
+      required: true
+      schema:
+        $ref: '../components/schemas/webhooks/create/request/payload.yaml'
+  security:
+    - bearerAuth: []
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/webhooks/create/response/payload-2.yaml
+    '401':
+      description: User not Authorised
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/auth/OauthFailedResponse.yaml
+          example:
+            error: invalid_grant
+            error_description: The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client.

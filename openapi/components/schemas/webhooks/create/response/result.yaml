@@ -1,0 +1,6 @@
+type: object
+properties:
+  result:
+    description: Result  object
+    type: object
+    $ref: ./callback-2.yaml

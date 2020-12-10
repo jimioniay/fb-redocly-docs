@@ -1,0 +1,8 @@
+type: object
+properties:
+  callback_id:
+    description: Callback ID
+    type: string
+  verifier:
+    description: webhook URI
+    type: string

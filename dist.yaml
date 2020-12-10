@@ -1,0 +1,349 @@
+openapi: 3.0.2
+info:
+  version: 3.0.0
+  title: Freshbooks Documentation
+  contact:
+    email: contact@freshbooks.com
+    url: 'https://support.freshbooks.com/hc/en-us'
+  x-logo:
+    url: >-
+      https://www.freshbooks.com/wp-content/themes/freshbooks/dist/images/navigation/freshbooks-logo_e1149d13.svg
+  description: >
+    # Home
+
+    Welcome to the Freshbooks Documentation where we have exposed our Restful
+    APIs as a product. In this documentation you'll see how seamless it is to
+    use Freshbooks APIs to solve complex problems in your day to day business.
+
+    # Authentication
+
+    We at Freshbooks use to the OAuth 2.0 to authenticate requests to any
+    resource on the Freshbooks API. We also made this super seamless. I'll be
+    showing you how to do this with 4 simple steps. Nothing more.
+
+    1. You create an application user/account
+    [here](https://my.freshbooks.com/#/developer). Look at this account as a
+    super account in the Freshbooks System. It would be responsible for
+    accessing all your resources in the Freshbooks ecosystem tied to that very
+    account. We have awesome blogpost
+    [here](https://www.freshbooks.com/api/authenticating-with-oauth-2-0-on-the-new-freshbooks-api)
+    showing how to create an Application.
+    ![image](https://res.cloudinary.com/seamless-africa-fintech/image/upload/v1607582957/FB_Auth_Flow_1_cukfy6.jpg)
+
+    2. Now render the Authorization URL from step 1. Once the application grants
+    Fresbooks access, we will redirect you to the Redirect URIs specified when
+    the application was created passing a `code` as query parameters to the
+    redirect URL. So make sure to listen on your redirect url for a query
+    parameter called `code`. You will need it
+
+
+    3. Now use the `code` from step 2 on as code on `/auth/oauth/token`. See
+    full API specification
+    [here](https://www.freshbooks.com/api/authentication). Freshbooks will then
+    return a pair of access_token and refresh_token. They are called tokens
+
+    4. Subsequent request on the Fresh Books APIs can be authenticated using the
+    token by passing it in the Authorization header as `Bearer <token>`
+servers:
+  - url: 'https://api.freshbooks.com'
+paths:
+  /auth/oauth:
+    post:
+      tags:
+        - Get Bearer Token
+      summary: Get bearer token
+      description: >
+        To generate tokens to access Freshbooks Resources tied to the Client ID
+        and the Client Secret combination.
+
+
+        A sample implementation in NodeJs and
+        [code](https://github.com/jimioniay/fb-auth-nodejs) 
+
+
+        ![picture](https://res.cloudinary.com/seamless-africa-fintech/image/upload/v1607586682/ezgif-4-6d97de8dc10c_gxvnrp.gif)
+      operationId: auth-oauth
+      parameters:
+        - name: grant_type
+          in: form
+          description: The type of grant for authentication
+          required: true
+          example: authorization_code
+          schema:
+            type: string
+        - name: code
+          in: form
+          description: >-
+            The `code` retrieved from your Redirect URL when Freshbooks is
+            granted access
+          schema:
+            type: string
+        - name: client_id
+          in: form
+          description: Client ID from your App on Frshbooks
+          schema:
+            type: string
+        - name: client_secret
+          in: form
+          description: Client secret from  your App on Freshbooks
+          schema:
+            type: string
+        - name: redirect_uri
+          in: form
+          description: The Redirect URL specified  while creating your App on Freshbooks
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Bearer Token Generated Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OauthSuccessResponse'
+              example:
+                access_token: >-
+                  86670f5dbb579b478c26a67e8ad035600c7365444c884ad493e60c4112fb1a7f
+                token_type: Bearer
+                expires_in: 43199
+                refresh_token: >-
+                  516b69ca15bdeb80ad72e81e94720d52cf7ca35053416b8525ce06720b3d4bf8
+                scope: 'admin:all:legacy'
+                created_at: 1607559356
+        '401':
+          description: User not Authorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OauthFailedResponse'
+              example:
+                error: invalid_grant
+                error_description: >-
+                  The provided authorization grant is invalid, expired, revoked,
+                  does not match the redirection URI used in the authorization
+                  request, or was issued to another client.
+  /auth/oauth/token:
+    post:
+      tags:
+        - Regenerate Bearer Token
+      summary: To regenerate bearer token using refresh token
+      description: >
+        To regenerate tokens to access Freshbooks resources tied to the Client
+        ID and the Client Secret combination.
+      operationId: auth-oauth
+      parameters:
+        - name: grant_type
+          in: form
+          description: The type of grant for authentication
+          required: true
+          schema:
+            type: string
+        - name: refresh_token
+          in: form
+          description: >-
+            The `code` retrieved from your Redirect URL when Freshbooks is
+            granted access
+          schema:
+            type: string
+        - name: client_id
+          in: form
+          description: Client ID from your App on Frshbooks
+          schema:
+            type: string
+        - name: client_secret
+          in: form
+          description: Client secret from  your App on Freshbooks
+          schema:
+            type: string
+        - name: redirect_uri
+          in: form
+          description: The Redirect URL specified  while creating your App on Freshbooks
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Bearer Token Generated Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OauthSuccessResponse'
+              example:
+                access_token: >-
+                  86670f5dbb579b478c26a67e8ad035600c7365444c884ad493e60c4112fb1a7f
+                token_type: Bearer
+                expires_in: 43199
+                refresh_token: >-
+                  516b69ca15bdeb80ad72e81e94720d52cf7ca35053416b8525ce06720b3d4bf8
+                scope: 'admin:all:legacy'
+                created_at: 1607559356
+        '401':
+          description: User not Authorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OauthFailedResponse'
+              example:
+                error: invalid_grant
+                error_description: >-
+                  The provided authorization grant is invalid, expired, revoked,
+                  does not match the redirection URI used in the authorization
+                  request, or was issued to another client.
+  '/events/account/@{accountid}/events/callbacks"':
+    post:
+      tags:
+        - Create Webhook
+      summary: Create Webhook
+      description: >
+        A webhook URL is a fully formed URL in your system where Freshbooks
+        sends events eg An item was edited or an invoice created and a projected
+        was edited etc
+
+        Freshbooks events are nouns and verbs. Eg For event `invoice.create`,
+        invoice is the noun and create the verb or action on the noun. You can
+        also subscribe to the noun (eg order) event so you can receieve all
+        events (create, update etc) on the event
+
+
+        # Webhook Use Case
+
+        An typical case would be an invoice or a project is updated, you get
+        notified. In the example below, I subscribed to invoice event with a
+        glitch servce https://webhook.site/3205a9f8-6a91-4d09-87fe-8aedeafcc2a1
+        as my webhook server. For everytime an action (via the Dashboard or API)
+        is performed on an invoice I am notified on my webhook
+
+        I'll use the dashboard for simplicity
+
+
+        ![image](https://res.cloudinary.com/seamless-africa-fintech/image/upload/v1607585776/ezgif-4-50f656e7d3e0_zzjo6g.gif)
+      operationId: create-webhook
+      parameters:
+        - name: grant_type
+          in: body
+          description: Body
+          required: true
+          schema:
+            $ref: '#/components/schemas/payload'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payload-2'
+        '401':
+          description: User not Authorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OauthFailedResponse'
+              example:
+                error: invalid_grant
+                error_description: >-
+                  The provided authorization grant is invalid, expired, revoked,
+                  does not match the redirection URI used in the authorization
+                  request, or was issued to another client.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Bearer <access_token>
+  schemas:
+    OauthSuccessResponse:
+      type: object
+      properties:
+        access_token:
+          description: Access Bearer Token
+          type: string
+          example: 203afbd6ea52c143d0ada7d6b45cc3afeecd740fd621abf1669c5684391b1fc5
+        token_type:
+          description: Expected Authentication Method
+          type: string
+          example: Bearer
+        expires_in:
+          description: Expirty time in seconds
+          type: int
+          example: 43200
+        refresh_token:
+          description: Refresh Bearer Token
+          type: string
+          example: a0c7f49954210781d5d41d4c90b327fdcb91a744d0067c3c4e48c0e57a913dd2
+        scope:
+          description: Scope of permission of access granted
+          type: string
+          example: 'admin:all:legacy'
+        created_at:
+          description: Time stamp
+          type: int
+          example: 1607289604
+    OauthFailedResponse:
+      type: object
+      properties:
+        error:
+          description: Error Response
+          type: string
+          example: invalid_grant
+        error_description:
+          description: Description of error experienced
+          type: string
+          example: >-
+            The provided authorization grant is invalid, expired, revoked, does
+            not match the redirection URI used in the authorization request, or
+            was issued to another client.
+    callback:
+      type: object
+      properties:
+        event:
+          description: Event
+          type: string
+        uri:
+          description: webhook URI
+          type: string
+    payload:
+      type: object
+      properties:
+        callback:
+          type: object
+          $ref: '#/components/schemas/callback'
+    callback-2:
+      type: object
+      properties:
+        callbackid:
+          description: Unique Idenitfier for Webhook created
+          type: string
+          example: 784451
+        verified:
+          description: Expected Authentication Method
+          type: boolean
+          example: Bearer
+        uri:
+          description: Webhook URI
+          type: string
+          example: 'https://webhook.site/3205a9f8-6a91-4d09-87fe-8aedeafcc2a13200'
+        event:
+          description: Event alloted to the Webhook URL
+          type: string
+          example: a0c7f49954210781d5d41d4c90b327fdcb91a744d0067c3c4e48c0e57a913dd2
+        updated_at:
+          description: Date Webhook was created
+          type: date
+    result:
+      type: object
+      properties:
+        result:
+          description: Result  object
+          type: object
+          $ref: '#/components/schemas/callback-2'
+    payload-2:
+      type: object
+      properties:
+        response:
+          description: Result Object
+          type: object
+          $ref: '#/components/schemas/result'
