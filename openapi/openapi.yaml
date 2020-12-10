@@ -4,9 +4,9 @@ info:
   title: Freshbooks Documentation
   contact:
     email: contact@freshbooks.com
-    url: "https://support.freshbooks.com/hc/en-us"
+    url: 'https://support.freshbooks.com/hc/en-us'
   x-logo:
-    url: "https://www.freshbooks.com/wp-content/themes/freshbooks/dist/images/navigation/freshbooks-logo_e1149d13.svg"
+    url: 'https://www.freshbooks.com/wp-content/themes/freshbooks/dist/images/navigation/freshbooks-logo_e1149d13.svg'
   description: >
     # Home
 
@@ -30,14 +30,14 @@ info:
 # - name: Authorization & Authe
 #   description: Get Authorization
 servers:
-  - url: "https://api.freshbooks.com"
+  - url: 'https://api.freshbooks.com'
 paths:
   /auth/oauth:
-    $ref: "paths/oauth.yaml"
+    $ref: 'paths/oauth.yaml'
   /auth/oauth/token:
-    $ref: "paths/oauth-reg.yaml"
-  /events/account/@{accountid}/events/callbacks":
-    $ref: "paths/create-webhook.yaml"
+    $ref: 'paths/oauth-reg.yaml'
+  /events/account/accountid/events/callbacks":
+    $ref: 'paths/create-webhook.yaml'
 components:
   securitySchemes:
     bearerAuth:

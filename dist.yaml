@@ -191,7 +191,7 @@ paths:
                   The provided authorization grant is invalid, expired, revoked,
                   does not match the redirection URI used in the authorization
                   request, or was issued to another client.
-  '/events/account/@{accountid}/events/callbacks"':
+  '/events/account/accountid/events/callbacks"':
     post:
       tags:
         - Create Webhook
@@ -268,7 +268,7 @@ components:
           example: Bearer
         expires_in:
           description: Expirty time in seconds
-          type: int
+          type: integer
           example: 43200
         refresh_token:
           description: Refresh Bearer Token
@@ -280,7 +280,7 @@ components:
           example: 'admin:all:legacy'
         created_at:
           description: Time stamp
-          type: int
+          type: integer
           example: 1607289604
     OauthFailedResponse:
       type: object
