@@ -10,7 +10,7 @@ properties:
     example: Bearer
   expires_in:
     description: Expirty time in seconds
-    type: int
+    type: integereger
     example: 43200
   refresh_token:
     description: Refresh Bearer Token
@@ -22,5 +22,5 @@ properties:
     example: admin:all:legacy
   created_at:
     description: Time stamp
-    type: int
+    type: integer
     example: 1607289604

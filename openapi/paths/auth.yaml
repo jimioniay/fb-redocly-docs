@@ -11,14 +11,14 @@ post:
   produces:
     - application/json
   responses:
-    "200":
-      $ref: "../components/schemas/auth/OauthSuccessResponse.yaml"
-      description: "Bearer Token Generated Successfully"
-    "401":
-      $ref: "../components/schemas/auth/OauthFailedResponse.yaml"
-      description: "Bearer Token Generated Successfully"
+    '200':
+      $ref: '../components/schemas/auth/OauthSuccessResponse.yaml'
+      description: 'Bearer Token Generated Successfully'
+    '401':
+      $ref: '../components/schemas/auth/OauthFailedResponse.yaml'
+      description: 'Bearer Token Generated Successfully'
   parameters:
-    - in: body
+    - in: query
       name: body
       description: Pet object that needs to be added to the store
       required: true

@@ -222,7 +222,7 @@ paths:
       operationId: create-webhook
       parameters:
         - name: grant_type
-          in: body
+          in: query
           description: Body
           required: true
           schema:
