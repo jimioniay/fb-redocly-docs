@@ -10,7 +10,7 @@ properties:
     example: Bearer
   expires_in:
     description: Expirty time in seconds
-    type: integereger
+    type: integer
     example: 43200
   refresh_token:
     description: Refresh Bearer Token
